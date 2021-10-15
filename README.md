@@ -1,5 +1,7 @@
 # Simple Counter App on Flutter
 
+![Screenshot](./Screenshot.png)
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
