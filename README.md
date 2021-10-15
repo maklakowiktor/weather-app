@@ -1,6 +1,4 @@
-# untitled
-
-A new Flutter project.
+# Simple Counter App on Flutter
 
 ## Getting Started
 
