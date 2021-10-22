@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 void main() => runApp(MyApp());
 
@@ -8,87 +9,174 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Welcome to flutter',
       home: Scaffold(
-        backgroundColor: Color(0xFF7889CF),
         appBar: AppBar(
-          title: Text("Counter"),
+          title: Text(
+            "Погода",
+            style: TextStyle(color: Colors.black87),
+          ),
           centerTitle: true,
+          backgroundColor: Colors.white,
+          leading: IconButton(icon: Icon(Icons.menu), onPressed: () {}),
+          iconTheme: IconThemeData(color: Colors.black54),
+          // brightness: Brightness.light,
+          systemOverlayStyle: SystemUiOverlayStyle.light,
+          actions: <Widget>[
+            IconButton(icon: Icon(Icons.settings), onPressed: () {})
+          ],
         ),
-        body: Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
+        body: _buildBody(),
+      ),
+    );
+  }
+}
+
+Widget _buildBody() {
+  return SingleChildScrollView(
+    child: Column(
+      children: <Widget>[
+        _headerImage(),
+        SafeArea(
+          child: Padding(
+            padding: EdgeInsets.all(16.0),
+            child: Column(
+              children: <Widget>[
+                _weatherDescription(),
+                Divider(),
+                _temperature(),
+                Divider(),
+                _temperatureForecast(),
+                Divider(),
+                _footerRatings(),
+              ],
+            ),
+          ),
+        ),
+      ],
+    ),
+  );
+}
+
+Widget _headerImage() {
+  return Image(
+    image: NetworkImage(
+        'https://sgp1.digitaloceanspaces.com/khabarhub/en/uploads/2020/03/sunny-weather.jpg'),
+    fit: BoxFit.cover,
+  );
+}
+
+Widget _weatherDescription() {
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.center,
+    children: const <Widget>[
+      Text(
+        'Четверг - 21 октября',
+        style: TextStyle(
+          fontSize: 32,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+      Divider(),
+      Text(
+        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus veniam, numquam labore aperiam vitae ratione magnam. Aspernatur nihil magni consequuntur ',
+        style: TextStyle(color: Colors.black54),
+      ),
+    ],
+  );
+}
+
+Row _temperature() {
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: <Widget>[
+      Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: const <Widget>[
+          Icon(
+            Icons.wb_sunny,
+            color: Colors.yellow,
+          ),
+        ],
+      ),
+      SizedBox(width: 16.0),
+      Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Row(
             children: const <Widget>[
               Text(
-                'Tap "-" to decrement',
+                '15° Ясно',
                 style: TextStyle(
-                  fontSize: 18,
-                  color: Colors.white,
-                ),
-              ),
-              CounterWidget(),
-              Text(
-                'Tap "+" to increment',
-                style: TextStyle(
-                  fontSize: 18,
-                  color: Colors.white,
+                  color: Colors.deepPurple,
                 ),
               ),
             ],
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class CounterWidget extends StatefulWidget {
-  const CounterWidget({Key? key}) : super(key: key);
-
-  @override
-  _CounterWidgetState createState() => _CounterWidgetState();
-}
-
-class _CounterWidgetState extends State<CounterWidget> {
-  int _count = 50;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 120,
-      margin: EdgeInsets.all(10.0),
-      decoration: BoxDecoration(
-        color: Color(0xFFC5CBEA),
-        borderRadius: BorderRadius.circular(4),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          IconButton(
-            tooltip: 'Decrement',
-            icon: Icon(Icons.horizontal_rule),
-            onPressed: () {
-              setState(() {
-                _count--;
-              });
-            },
-          ),
-          Text(
-            "$_count",
-            style: TextStyle(
-              fontSize: 20,
-              color: Colors.black,
-            ),
-          ),
-          IconButton(
-            tooltip: 'Increment',
-            icon: Icon(Icons.add),
-            onPressed: () {
-              setState(() {
-                _count++;
-              });
-            },
+          Row(
+            children: const <Widget>[
+              Text(
+                'Архангельская область, Котлас',
+                style: TextStyle(
+                  color: Colors.grey,
+                ),
+              ),
+            ],
           ),
         ],
       ),
-    );
-  }
+    ],
+  );
+}
+
+Wrap _temperatureForecast() {
+  return Wrap(
+    spacing: 10,
+    children: List.generate(8, (int index) {
+      return Chip(
+        label: Text(
+          '${index + 20}°C',
+          style: TextStyle(
+            fontSize: 15.0,
+          ),
+        ),
+        avatar: Icon(
+          Icons.wb_cloudy,
+          color: Colors.blue.shade300,
+        ),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(4.0),
+          side: BorderSide(
+            color: Colors.grey,
+          ),
+        ),
+        backgroundColor: Colors.grey.shade100,
+      );
+    }),
+  );
+}
+
+Row _footerRatings() {
+  var stars = Row(
+    mainAxisSize: MainAxisSize.min,
+    children: <Widget>[
+      Icon(Icons.star, size: 15.0, color: Colors.yellow[600]),
+      Icon(Icons.star, size: 15.0, color: Colors.yellow[600]),
+      Icon(Icons.star, size: 15.0, color: Colors.yellow[600]),
+      Icon(Icons.star, size: 15.0, color: Colors.black),
+      Icon(Icons.star, size: 15.0, color: Colors.black),
+    ],
+  );
+
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    children: <Widget>[
+      Text(
+        "Инфо из openweathermap.org",
+        style: TextStyle(
+          fontSize: 15.0,
+          color: Colors.black87,
+        ),
+      ),
+      stars,
+    ],
+  );
 }
