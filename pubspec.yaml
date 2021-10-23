@@ -58,9 +58,9 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  assets:
-    - assets/images/22867546-bg.jpg
-    - assets/icons/22867548-icon.png
+  # assets:
+    # - assets/images/22867546-bg.jpg
+    # - assets/icons/22867548-icon.png
     # - assets/images/3724482.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -74,10 +74,10 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  fonts:
-    - family: IndieFlower
-      fonts:
-        - asset: assets/fonts/IndieFlower-Regular.ttf
+  # fonts:
+  #   - family: IndieFlower
+  #     fonts:
+  #       - asset: assets/fonts/IndieFlower-Regular.ttf
 
   #
   # For details regarding fonts from package dependencies,

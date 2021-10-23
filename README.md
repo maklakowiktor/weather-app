@@ -1,4 +1,4 @@
-# Simple Counter App on Flutter
+# Weather App on Flutter
 
 ![Screenshot](./Screenshot.png)
 
